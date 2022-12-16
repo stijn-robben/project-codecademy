@@ -1,7 +1,6 @@
 package gui;
 
 import java.sql.SQLException;
-import database.studentData;
 import javafx.application.Application;
 
 public class Main {

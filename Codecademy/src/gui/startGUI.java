@@ -1,36 +1,38 @@
 package gui;
 
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class startGUI extends Application {
     Scene primaryScene;
 
+    database.studentData studentData = new database.studentData();
+
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Codecademy application");
+        stage.getIcons().add(new Image("/resources/codecademyIcon.jpg"));
         primaryScene(stage);
     }
 
@@ -48,7 +50,7 @@ public class startGUI extends Application {
 
     public void studentScene(Stage stage) {
         BorderPane borderPane = new BorderPane();
-        borderPane.setPrefSize(400, 200);
+        borderPane.setPrefSize(600, 250);
 
         TextField value0 = new TextField();
         TextField value1 = new TextField();
@@ -58,6 +60,7 @@ public class startGUI extends Application {
         TextField value5 = new TextField();
         TextField value6 = new TextField();
         TextField value7 = new TextField();
+        TextField output = new TextField();
 
         Label label0 = new Label("Initial email");
         Label label1 = new Label("Student email");
@@ -67,8 +70,10 @@ public class startGUI extends Application {
         Label label5 = new Label("Address");
         Label label6 = new Label("City");
         Label label7 = new Label("Country");
+
         Button submit = new Button("Submit");
         Button clear = new Button("Clear");
+        Button primaryScene = new Button("Back to home");
 
         GridPane userInput = new GridPane();
         userInput.addRow(0, label0, value0);
@@ -82,6 +87,7 @@ public class startGUI extends Application {
         userInput.setHgap(10);
         userInput.setVgap(10);
         userInput.setPadding(new Insets(10, 10, 10, 10));
+
         ToggleGroup radioGroup = new ToggleGroup();
         RadioButton rb1 = new RadioButton("Create");
         rb1.setToggleGroup(radioGroup);
@@ -91,6 +97,7 @@ public class startGUI extends Application {
         rb3.setToggleGroup(radioGroup);
         RadioButton rb4 = new RadioButton("Delete");
         rb4.setToggleGroup(radioGroup);
+
         HBox buttons = new HBox();
         buttons.setPadding(new Insets(10, 10, 10, 10));
         buttons.setSpacing(10);
@@ -98,6 +105,9 @@ public class startGUI extends Application {
 
         VBox radio = new VBox(20, rb1, rb2, rb3, rb4, buttons);
         radio.setPadding(new Insets(10, 10, 10, 10));
+
+        output.setEditable(false);
+        output.setPadding(new Insets(10, 10, 10, 10));
 
         radioGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             public void changed(ObservableValue<? extends Toggle> ob, Toggle o, Toggle n) {
@@ -165,6 +175,7 @@ public class startGUI extends Application {
                     }
                 }
             }
+
         });
 
         clear.setOnAction((event) -> {
@@ -176,10 +187,58 @@ public class startGUI extends Application {
             value5.clear();
             value6.clear();
             value7.clear();
+            output.clear();
         });
 
+        submit.setOnAction((event) -> {
+            RadioButton rb = (RadioButton) radioGroup.getSelectedToggle();
+            String s = rb.getText();
+
+            if (s.equals("Read")) {
+                try {
+                    output.setText(studentData.readStudent(value1.getText()));
+                } catch (SQLException e) {
+                    output.setText("Something went wrong...");
+                }
+            }
+
+            if (s.equals("Create")) {
+
+                try {
+                    String date = formatDate(value3.getText());
+                    boolean checkEmail = checkEmail(value1.getText());
+                    if (date.equals("Incorrect date...")) {
+                        output.setText("Incorrect date...");
+                    }
+                    if (checkEmail == false) {
+                        output.setText("Incorrect email...");
+                    }
+
+                    if (!date.equals("Incorrect date...") && checkEmail == true) {
+                        output.setText(studentData.createStudent(value1.getText(), value2.getText(),
+                                date,
+                                value4.getText(), value5.getText(), value6.getText(), value7.getText()));
+                    }
+                } catch (Exception e) {
+                    output.setText("Something went wrong...");
+                }
+            }
+            if (s.equals("Delete")) {
+
+            }
+            if (s.equals("Update"))
+                ;
+        });
+
+        primaryScene.setOnAction((event) -> {
+            primaryScene(stage);
+        });
+
+        borderPane.setBottom(output);
         borderPane.setLeft(radio);
         borderPane.setRight(userInput);
+        borderPane.setTop(primaryScene);
+
         Scene secondaryScene = new Scene(borderPane);
         stage.setScene(secondaryScene);
     }
@@ -208,4 +267,30 @@ public class startGUI extends Application {
         return label;
     }
 
+    // If user inputs DD-MM-YYYY it will format it to YYYY-MM-DD, if user inputs
+    // YYYY-MM-DD it will return just return it.
+    public String formatDate(String date) throws ParseException {
+        String str = date;
+        String[] arrOfStr = str.split("-", -1);
+        if (arrOfStr[0].length() == 2) {
+            try {
+                String startDateString = date;
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+                return sdf2.format(sdf.parse(startDateString));
+            } catch (Exception e) {
+                return "Something went wrong!";
+            }
+        } else if (arrOfStr[0].length() == 2) {
+            return date;
+        }
+        return "Incorrect date...";
+    }
+
+    public boolean checkEmail(String email) {
+        String regex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]*@[a-zA-Z0-9]*[a-zA-Z0-9]\\.[a-zA-Z][a-zA-Z0-9]*$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
 }

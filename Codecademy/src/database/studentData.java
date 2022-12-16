@@ -4,20 +4,16 @@ import java.sql.*;
 
 public class studentData extends connection {
     // CRUD
-    public void createStudent(String studentEmail, String name, String dateOfBirth, String gender, String address,
+    public String createStudent(String studentEmail, String name, String dateOfBirth, String gender, String address,
             String city, String country) throws SQLException {
-        // "M" or "F"
-        if (gender.length() != 1) {
-            throw new IllegalArgumentException("Invalid gender string length");
-        }
         String SQL = "INSERT INTO Student VALUES ('" + studentEmail + "', '" + name + "', '" + dateOfBirth + "', '"
                 + gender + "', '" + address + "', '" + city + "', '" + country + "')";
-        super.runQuery(SQL, false, "Student");
+        return super.runQuery(SQL, false, "Student");
     }
 
-    public void readStudent(String email) throws SQLException {
+    public String readStudent(String email) throws SQLException {
         String SQL = "SELECT * FROM Student WHERE StudentEmail = '" + email + "';";
-        super.runQuery(SQL, true, "Student");
+        return super.runQuery(SQL, true, "Student");
     }
 
     // Update & Try/Catch
