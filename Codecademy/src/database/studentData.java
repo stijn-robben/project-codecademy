@@ -2,8 +2,7 @@ package database;
 
 import java.sql.*;
 
-public class studentData extends connection {
-    // CRUD
+public class StudentData extends Connection {
     public String createStudent(String studentEmail, String name, String dateOfBirth, String gender, String address,
             String city, String country) throws SQLException {
         String SQL = "INSERT INTO Student VALUES ('" + studentEmail + "', '" + name + "', '" + dateOfBirth + "', '"
@@ -19,7 +18,6 @@ public class studentData extends connection {
     public String updateStudent(String initialEmail, String email, String name, String dateOfBirth, String gender,
             String address,
             String city, String country) throws SQLException {
-        System.out.println("Current data from user with email address " + initialEmail);
         readStudent(initialEmail);
         String SQL = "UPDATE Student SET StudentEmail = '" + email + "', Name = '" + name + "', DateOfBirth = '"
                 + dateOfBirth + "', Gender = '" + gender + "', Address = '" + address + "', City = '" + city

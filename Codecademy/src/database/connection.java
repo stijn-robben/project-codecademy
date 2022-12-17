@@ -2,13 +2,10 @@ package database;
 
 import java.sql.*;
 
-public class connection {
+public class Connection {
     String connectionUrl = "jdbc:sqlserver://localhost;databaseName=Codecademy;integratedSecurity=true;encrypt=true;trustServerCertificate=true;";
 
     public void getConnection() throws ClassNotFoundException, SQLException {
-        // Connection con = null;
-        // Statement stmt = null;
-        // ResultSet rs = null;
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
     }
 
@@ -23,7 +20,6 @@ public class connection {
                 String result = printSQLResultStudent(rs);
                 return result;
             }
-            // add more tables for more CRUD on tables
         }
         return "The table is not supported.";
     }
