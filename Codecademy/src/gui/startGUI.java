@@ -203,18 +203,20 @@ public class startGUI extends Application {
             }
 
             if (s.equals("Create")) {
-
                 try {
                     String date = formatDate(value3.getText());
                     boolean checkEmail = checkEmail(value1.getText());
+                    boolean checkGender = checkGender(value4.getText());
                     if (date.equals("Incorrect date...")) {
                         output.setText("Incorrect date...");
                     }
                     if (checkEmail == false) {
                         output.setText("Incorrect email...");
                     }
-
-                    if (!date.equals("Incorrect date...") && checkEmail == true) {
+                    if (checkGender == false) {
+                        output.setText("Make sure the gender is written in the following way: M or F.");
+                    }
+                    if (!date.equals("Incorrect date...") && checkEmail == true && checkGender == true) {
                         output.setText(studentData.createStudent(value1.getText(), value2.getText(),
                                 date,
                                 value4.getText(), value5.getText(), value6.getText(), value7.getText()));
@@ -223,11 +225,39 @@ public class startGUI extends Application {
                     output.setText("Something went wrong...");
                 }
             }
-            if (s.equals("Delete")) {
 
+            if (s.equals("Delete")) {
+                try {
+                    output.setText(studentData.deleteStudent(value1.getText()));
+                } catch (SQLException e) {
+                    output.setText("Something went wrong...");
+                }
             }
-            if (s.equals("Update"))
-                ;
+
+            if (s.equals("Update")) {
+                try {
+                    String date = formatDate(value3.getText());
+                    boolean checkEmail = checkEmail(value1.getText());
+                    boolean checkGender = checkGender(value4.getText());
+                    if (date.equals("Incorrect date...")) {
+                        output.setText("Incorrect date...");
+                    }
+                    if (checkEmail == false) {
+                        output.setText("Incorrect email...");
+                    }
+                    if (checkGender == false) {
+                        output.setText("Make sure the gender is written in the following way: M or F.");
+                    }
+                    if (!date.equals("Incorrect date...") && checkEmail == true && checkGender == true) {
+                        output.setText(
+                                studentData.updateStudent(value0.getText(), value1.getText(), value2.getText(), date,
+                                        value4.getText(), value5.getText(), value6.getText(), value7.getText()));
+                    }
+
+                } catch (Exception e) {
+                    output.setText("Something went wrong...");
+                }
+            }
         });
 
         primaryScene.setOnAction((event) -> {
@@ -292,5 +322,12 @@ public class startGUI extends Application {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
+    }
+
+    public boolean checkGender(String gender) {
+        if (gender.length() == 1) {
+            return true;
+        }
+        return false;
     }
 }

@@ -16,8 +16,7 @@ public class studentData extends connection {
         return super.runQuery(SQL, true, "Student");
     }
 
-    // Update & Try/Catch
-    public void updateStudent(String initialEmail, String email, String name, String dateOfBirth, String gender,
+    public String updateStudent(String initialEmail, String email, String name, String dateOfBirth, String gender,
             String address,
             String city, String country) throws SQLException {
         System.out.println("Current data from user with email address " + initialEmail);
@@ -25,14 +24,19 @@ public class studentData extends connection {
         String SQL = "UPDATE Student SET StudentEmail = '" + email + "', Name = '" + name + "', DateOfBirth = '"
                 + dateOfBirth + "', Gender = '" + gender + "', Address = '" + address + "', City = '" + city
                 + "', Country =  '" + country + "' WHERE StudentEmail = '" + initialEmail + "';";
-        super.runQuery(SQL, false, "Student");
-        System.out.println("Updated data from user with inital email adress " + initialEmail);
-        readStudent(email);
+        if (readStudent(initialEmail).equals("The specified e-mail address does not appear in the database.")) {
+            return "The specified e-mail address does not appear in the database.";
+        }
+        return super.runQuery(SQL, false, "Student");
+
     }
 
-    public void deleteStudent(String email) throws SQLException {
+    public String deleteStudent(String email) throws SQLException {
+        if (readStudent(email).equals("The specified e-mail address does not appear in the database.")) {
+            return "The specified e-mail address does not appear in the database.";
+        }
         String SQL = "DELETE FROM Student WHERE StudentEmail = '" + email + "';";
-        super.runQuery(SQL, false, "Student");
+        return super.runQuery(SQL, false, "Student");
     }
 
 }

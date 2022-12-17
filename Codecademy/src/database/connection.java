@@ -15,8 +15,8 @@ public class connection {
     public String runQuery(String query, boolean returnsResultSet, String table) throws SQLException {
         Statement stmt = DriverManager.getConnection(connectionUrl).createStatement();
         if (!returnsResultSet) {
-            stmt.executeUpdate(query);
-            return "Data has been placed in the database.";
+            stmt.execute(query);
+            return "Data has been updated in the database.";
         } else if (returnsResultSet) {
             if (table.equals("Student")) {
                 ResultSet rs = stmt.executeQuery(query);
