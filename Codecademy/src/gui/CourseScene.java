@@ -1,7 +1,5 @@
 package gui;
 
-import java.sql.SQLException;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
@@ -18,47 +16,37 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class StudentScene extends InputChecks {
-    database.StudentData studentData = new database.StudentData();
+public class CourseScene extends InputChecks {
+    database.CourseData courseData = new database.CourseData();
 
-    public void studentScene(Stage stage) {
+    public void courseScene(Stage stage) {
         PrimaryScene primaryScene = new PrimaryScene();
         BorderPane borderPane = new BorderPane();
         borderPane.setPrefSize(600, 250);
 
+        TextField value4 = new TextField();
         TextField value0 = new TextField();
         TextField value1 = new TextField();
         TextField value2 = new TextField();
         TextField value3 = new TextField();
-        TextField value4 = new TextField();
-        TextField value5 = new TextField();
-        TextField value6 = new TextField();
-        TextField value7 = new TextField();
         TextField output = new TextField();
 
-        Label label0 = new Label("Initial email");
-        Label label1 = new Label("Student email");
-        Label label2 = new Label("Name");
-        Label label3 = new Label("Date of birth");
-        Label label4 = new Label("Gender");
-        Label label5 = new Label("Address");
-        Label label6 = new Label("City");
-        Label label7 = new Label("Country");
+        Label label4 = new Label("Initial course name");
+        Label label0 = new Label("Course name");
+        Label label1 = new Label("Subject");
+        Label label2 = new Label("Introduction Text");
+        Label label3 = new Label("Level");
 
         Button submit = new Button("Submit");
         Button clear = new Button("Clear");
         Button toPrimaryScene = new Button("Back to home");
-        submit.setId("button-style");
-        submit.setStyle("-fx-font-family: Apercu; -fx-font-size: 25");
+
         GridPane userInput = new GridPane();
-        userInput.addRow(0, label0, value0);
-        userInput.addRow(1, label1, value1);
-        userInput.addRow(2, label2, value2);
-        userInput.addRow(3, label3, value3);
-        userInput.addRow(4, label4, value4);
-        userInput.addRow(5, label5, value5);
-        userInput.addRow(6, label6, value6);
-        userInput.addRow(7, label7, value7);
+        userInput.addRow(0, label4, value4);
+        userInput.addRow(1, label0, value0);
+        userInput.addRow(2, label1, value1);
+        userInput.addRow(3, label2, value2);
+        userInput.addRow(4, label3, value3);
         userInput.setHgap(10);
         userInput.setVgap(10);
         userInput.setPadding(new Insets(10, 10, 10, 10));
@@ -90,63 +78,44 @@ public class StudentScene extends InputChecks {
 
                 if (rb != null) {
                     String s = rb.getText();
-                    // change input fields depending on radio select
                     if (s.equals("Create")) {
-                        setManagedAndVisableFalse(value0);
-                        setManagedAndVisableTrue(value1);
-                        setManagedAndVisableTrue(value2);
-                        setManagedAndVisableTrue(value3);
-                        setManagedAndVisableTrue(value4);
-                        setManagedAndVisableTrue(value5);
-                        setManagedAndVisableTrue(value6);
-                        setManagedAndVisableTrue(value7);
-
-                        setLabelManagedAndVisableFalse(label0);
-                        setLabelManagedAndVisableTrue(label1);
-                        setLabelManagedAndVisableTrue(label2);
-                        setLabelManagedAndVisableTrue(label3);
-                        setLabelManagedAndVisableTrue(label4);
-                        setLabelManagedAndVisableTrue(label5);
-                        setLabelManagedAndVisableTrue(label6);
-                        setLabelManagedAndVisableTrue(label7);
-                    }
-                    if (s.equals("Delete") || s.equals("Read")) {
-                        setManagedAndVisableFalse(value0);
-                        setManagedAndVisableTrue(value1);
-                        setManagedAndVisableFalse(value2);
-                        setManagedAndVisableFalse(value3);
                         setManagedAndVisableFalse(value4);
-                        setManagedAndVisableFalse(value5);
-                        setManagedAndVisableFalse(value6);
-                        setManagedAndVisableFalse(value7);
-
-                        setLabelManagedAndVisableFalse(label0);
-                        setLabelManagedAndVisableTrue(label1);
-                        setLabelManagedAndVisableFalse(label2);
-                        setLabelManagedAndVisableFalse(label3);
-                        setLabelManagedAndVisableFalse(label4);
-                        setLabelManagedAndVisableFalse(label5);
-                        setLabelManagedAndVisableFalse(label6);
-                        setLabelManagedAndVisableFalse(label7);
-                    }
-                    if (s.equals("Update")) {
                         setManagedAndVisableTrue(value0);
                         setManagedAndVisableTrue(value1);
                         setManagedAndVisableTrue(value2);
                         setManagedAndVisableTrue(value3);
-                        setManagedAndVisableTrue(value4);
-                        setManagedAndVisableTrue(value5);
-                        setManagedAndVisableTrue(value6);
-                        setManagedAndVisableTrue(value7);
 
+                        setLabelManagedAndVisableFalse(label4);
                         setLabelManagedAndVisableTrue(label0);
                         setLabelManagedAndVisableTrue(label1);
                         setLabelManagedAndVisableTrue(label2);
                         setLabelManagedAndVisableTrue(label3);
+                    }
+                    if (s.equals("Delete") || s.equals("Read")) {
+                        setManagedAndVisableFalse(value4);
+                        setManagedAndVisableTrue(value0);
+                        setManagedAndVisableFalse(value1);
+                        setManagedAndVisableFalse(value2);
+                        setManagedAndVisableFalse(value3);
+
+                        setLabelManagedAndVisableFalse(label4);
+                        setLabelManagedAndVisableTrue(label0);
+                        setLabelManagedAndVisableFalse(label1);
+                        setLabelManagedAndVisableFalse(label2);
+                        setLabelManagedAndVisableFalse(label3);
+                    }
+                    if (s.equals("Update")) {
+                        setManagedAndVisableTrue(value4);
+                        setManagedAndVisableTrue(value0);
+                        setManagedAndVisableTrue(value1);
+                        setManagedAndVisableTrue(value2);
+                        setManagedAndVisableTrue(value3);
+
                         setLabelManagedAndVisableTrue(label4);
-                        setLabelManagedAndVisableTrue(label5);
-                        setLabelManagedAndVisableTrue(label6);
-                        setLabelManagedAndVisableTrue(label7);
+                        setLabelManagedAndVisableTrue(label0);
+                        setLabelManagedAndVisableTrue(label1);
+                        setLabelManagedAndVisableTrue(label2);
+                        setLabelManagedAndVisableTrue(label3);
                     }
                 }
             }
@@ -159,9 +128,6 @@ public class StudentScene extends InputChecks {
             value2.clear();
             value3.clear();
             value4.clear();
-            value5.clear();
-            value6.clear();
-            value7.clear();
             output.clear();
         });
 
@@ -171,30 +137,21 @@ public class StudentScene extends InputChecks {
 
             if (s.equals("Read")) {
                 try {
-                    output.setText(studentData.readStudent(value1.getText()));
-                } catch (SQLException e) {
+                    output.setText(courseData.readCourse(value0.getText()));
+                } catch (Exception e) {
                     output.setText("Something went wrong...");
                 }
             }
 
             if (s.equals("Create")) {
                 try {
-                    String date = formatDate(value3.getText());
-                    boolean checkEmail = checkEmail(value1.getText());
-                    boolean checkGender = checkGender(value4.getText());
-                    if (date.equals("Incorrect date...")) {
-                        output.setText("Incorrect date...");
+                    boolean level = checkLevel(value3.getText());
+                    if (!level) {
+                        output.setText("Make sure level is either Beginner, Gevorders or Expert.");
                     }
-                    if (checkEmail == false) {
-                        output.setText("Incorrect email...");
-                    }
-                    if (checkGender == false) {
-                        output.setText("Make sure the gender is written in the following way: M or F.");
-                    }
-                    if (!date.equals("Incorrect date...") && checkEmail == true && checkGender == true) {
-                        output.setText(studentData.createStudent(value1.getText(), value2.getText(),
-                                date,
-                                value4.getText(), value5.getText(), value6.getText(), value7.getText()));
+                    if (level) {
+                        output.setText(courseData.createCourse(value0.getText(), value1.getText(), value2.getText(),
+                                value3.getText()));
                     }
                 } catch (Exception e) {
                     output.setText("Something went wrong...");
@@ -203,30 +160,21 @@ public class StudentScene extends InputChecks {
 
             if (s.equals("Delete")) {
                 try {
-                    output.setText(studentData.deleteStudent(value1.getText()));
-                } catch (SQLException e) {
+                    output.setText(courseData.deleteCourse(value0.getText()));
+                } catch (Exception e) {
                     output.setText("Something went wrong...");
                 }
             }
 
             if (s.equals("Update")) {
                 try {
-                    String date = formatDate(value3.getText());
-                    boolean checkEmail = checkEmail(value1.getText());
-                    boolean checkGender = checkGender(value4.getText());
-                    if (date.equals("Incorrect date...")) {
-                        output.setText("Incorrect date...");
+                    boolean level = checkLevel(value3.getText());
+                    if (!level) {
+                        output.setText("Make sure level is either Beginner, Gevorders or Expert.");
                     }
-                    if (checkEmail == false) {
-                        output.setText("Incorrect email...");
-                    }
-                    if (checkGender == false) {
-                        output.setText("Make sure the gender is written in the following way: M or F.");
-                    }
-                    if (!date.equals("Incorrect date...") && checkEmail == true && checkGender == true) {
-                        output.setText(
-                                studentData.updateStudent(value0.getText(), value1.getText(), value2.getText(), date,
-                                        value4.getText(), value5.getText(), value6.getText(), value7.getText()));
+                    if (level) {
+                        output.setText(courseData.updateCourse(value4.getText(), value0.getText(), value1.getText(),
+                                value2.getText(), value3.getText()));
                     }
 
                 } catch (Exception e) {
@@ -244,9 +192,9 @@ public class StudentScene extends InputChecks {
         borderPane.setRight(userInput);
         borderPane.setTop(toPrimaryScene);
 
-        Scene studentScene = new Scene(borderPane);
-        studentScene.getStylesheets().add("/resources/stylesheet.css");
-        stage.setScene(studentScene);
+        Scene courseScene = new Scene(borderPane);
+        courseScene.getStylesheets().add("/resources/stylesheet.css");
+        stage.setScene(courseScene);
     }
 
     public TextField setManagedAndVisableTrue(TextField value) {

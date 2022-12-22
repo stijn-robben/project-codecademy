@@ -39,4 +39,11 @@ public class InputChecks {
         }
         return false;
     }
+
+    public boolean checkLevel(String level) {
+        if (level.equals("Beginner") || level.equals("Gevorderd") || level.equals("Expert")) {
+            return true;
+        }
+        return false;
+    }
 }

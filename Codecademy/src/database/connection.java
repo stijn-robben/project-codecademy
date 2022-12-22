@@ -20,6 +20,11 @@ public class Connection {
                 String result = printSQLResultStudent(rs);
                 return result;
             }
+            if (table.equals("Course")) {
+                ResultSet rs = stmt.executeQuery(query);
+                String result = printSQLResultCourse(rs);
+                return result;
+            }
         }
         return "The table is not supported.";
     }
@@ -39,6 +44,18 @@ public class Connection {
             return result;
         }
         return "The specified e-mail address does not appear in the database.";
+    }
+
+    public static String printSQLResultCourse(ResultSet rs) throws SQLException {
+        while (rs.next()) {
+            String courseName = rs.getString("CourseName");
+            String subject = rs.getString("Subject");
+            String introductionText = rs.getString("IntroductionText");
+            String level = rs.getString("Level");
+            String result = "" + courseName + ", " + subject + ", " + introductionText + ", " + level;
+            return result;
+        }
+        return "The specified course does not appear in the database.";
     }
 
     // More printSQL methods here
