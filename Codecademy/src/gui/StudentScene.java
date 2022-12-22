@@ -48,8 +48,7 @@ public class StudentScene extends InputChecks {
         Button submit = new Button("Submit");
         Button clear = new Button("Clear");
         Button toPrimaryScene = new Button("Back to home");
-        submit.setId("button-style");
-        submit.setStyle("-fx-font-family: Apercu; -fx-font-size: 25");
+
         GridPane userInput = new GridPane();
         userInput.addRow(0, label0, value0);
         userInput.addRow(1, label1, value1);
@@ -72,6 +71,17 @@ public class StudentScene extends InputChecks {
         rb3.setToggleGroup(radioGroup);
         RadioButton rb4 = new RadioButton("Delete");
         rb4.setToggleGroup(radioGroup);
+
+        // styling
+        value0.setId("text-area-style");
+        value1.setId("text-area-style");
+        value2.setId("text-area-style");
+        value3.setId("text-area-style");
+        value4.setId("text-area-style");
+        value5.setId("text-area-style");
+        value6.setId("text-area-style");
+        value7.setId("text-area-style");
+        output.setId("text-area-style");
 
         HBox buttons = new HBox();
         buttons.setPadding(new Insets(10, 10, 10, 10));

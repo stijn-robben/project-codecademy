@@ -3,11 +3,14 @@ package gui;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class PrimaryScene {
     public void primaryScene(Stage stage) {
+        BorderPane borderPane = new BorderPane();
+        borderPane.setPrefSize(600, 250);
         StudentScene studentScene = new StudentScene();
         CourseScene courseScene = new CourseScene();
         Scene primaryScene;
@@ -16,9 +19,13 @@ public class PrimaryScene {
         Button button2 = new Button("Go to course CRUD");
         button1.setOnAction(e -> studentScene.studentScene(stage));
         button2.setOnAction(e -> courseScene.courseScene(stage));
-        VBox layout1 = new VBox(20);
-        layout1.getChildren().addAll(label1, button1, button2);
-        primaryScene = new Scene(layout1, 300, 250);
+        button1.setMinHeight(80);
+        button2.setMinHeight(80);
+        HBox buttons = new HBox(20);
+        buttons.getChildren().addAll(button1, button2);
+        borderPane.setTop(label1);
+        borderPane.setCenter(buttons);
+        primaryScene = new Scene(borderPane, 600, 250);
         primaryScene.getStylesheets().add(getClass().getResource("/resources/stylesheet.css").toExternalForm());
         stage.setScene(primaryScene);
         stage.show();

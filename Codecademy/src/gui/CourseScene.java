@@ -61,6 +61,14 @@ public class CourseScene extends InputChecks {
         RadioButton rb4 = new RadioButton("Delete");
         rb4.setToggleGroup(radioGroup);
 
+        // styling
+        value0.setId("text-area-style");
+        value1.setId("text-area-style");
+        value2.setId("text-area-style");
+        value3.setId("text-area-style");
+        value4.setId("text-area-style");
+        output.setId("text-area-style");
+
         HBox buttons = new HBox();
         buttons.setPadding(new Insets(10, 10, 10, 10));
         buttons.setSpacing(10);
