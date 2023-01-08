@@ -25,12 +25,17 @@ public class Connection {
                 String result = printSQLResultCourse(rs);
                 return result;
             }
+            if (table.equals("Registration")) {
+                ResultSet rs = stmt.executeQuery(query);
+                String result = printSQLResultRegistration(rs);
+                return result;
+            }
         }
         return "The table is not supported.";
     }
 
     public static String printSQLResultStudent(ResultSet rs) throws SQLException {
-
+        String result = "";
         while (rs.next()) {
             String email = rs.getString("StudentEmail");
             String name = rs.getString("Name");
@@ -39,23 +44,41 @@ public class Connection {
             String address = rs.getString("Address");
             String city = rs.getString("City");
             String country = rs.getString("Country");
-            String result = "" + email + ", " + name + ", " + dateOfBirth + ", " + gender + ", " + address + ", " + city
-                    + ", " + country;
-            return result;
+            result += "" + email + ", " + name + ", " + dateOfBirth + ", " + gender + ", " + address + ", " + city
+                    + ", " + country + " ";
         }
-        return "The specified e-mail address does not appear in the database.";
+        if (result.equals("")) {
+            return "The specified student email does not appear in the database.";
+        }
+        return result;
     }
 
     public static String printSQLResultCourse(ResultSet rs) throws SQLException {
+        String result = "";
         while (rs.next()) {
             String courseName = rs.getString("CourseName");
             String subject = rs.getString("Subject");
             String introductionText = rs.getString("IntroductionText");
             String level = rs.getString("Level");
-            String result = "" + courseName + ", " + subject + ", " + introductionText + ", " + level;
-            return result;
+            result += "" + courseName + ", " + subject + ", " + introductionText + ", " + level;
         }
-        return "The specified course does not appear in the database.";
+        if (result.equals("")) {
+            return "The specified course name does not appear in the database.";
+        }
+        return result;
+    }
+
+    public static String printSQLResultRegistration(ResultSet rs) throws SQLException {
+        String result = "";
+        while (rs.next()) {
+            String courseName = rs.getString("CourseName");
+            String studentEmail = rs.getString("StudentEmail");
+            result += "" + courseName + " " + studentEmail + ", ";
+        }
+        if (result.equals("")) {
+            return "The specified course name / student email does not appear in the database.";
+        }
+        return result;
     }
 
     // More printSQL methods here
