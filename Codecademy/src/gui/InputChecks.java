@@ -54,6 +54,12 @@ public class InputChecks {
         } else {
             return false;
         }
+    }
 
+    public boolean checkZipCode(String zipCode) {
+        String regex = "^[1-9][0-9]{3}\\s[a-zA-Z]{2}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(zipCode);
+        return matcher.matches();
     }
 }

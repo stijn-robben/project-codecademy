@@ -34,6 +34,7 @@ public class StudentScene extends InputChecks {
         TextField value5 = new TextField();
         TextField value6 = new TextField();
         TextField value7 = new TextField();
+        TextField value8 = new TextField();
         TextField output = new TextField();
 
         Label label0 = new Label("Initial email");
@@ -44,6 +45,7 @@ public class StudentScene extends InputChecks {
         Label label5 = new Label("Address");
         Label label6 = new Label("City");
         Label label7 = new Label("Country");
+        Label label8 = new Label("Zip code");
 
         Button submit = new Button("Submit");
         Button clear = new Button("Clear");
@@ -58,6 +60,7 @@ public class StudentScene extends InputChecks {
         userInput.addRow(5, label5, value5);
         userInput.addRow(6, label6, value6);
         userInput.addRow(7, label7, value7);
+        userInput.addRow(8, label8, value8);
         userInput.setHgap(10);
         userInput.setVgap(10);
         userInput.setPadding(new Insets(10, 10, 10, 10));
@@ -81,6 +84,7 @@ public class StudentScene extends InputChecks {
         value5.setId("text-area-style");
         value6.setId("text-area-style");
         value7.setId("text-area-style");
+        value8.setId("text-area-style");
         output.setId("text-area-style");
 
         HBox buttons = new HBox();
@@ -110,6 +114,7 @@ public class StudentScene extends InputChecks {
                         setManagedAndVisableTrue(value5);
                         setManagedAndVisableTrue(value6);
                         setManagedAndVisableTrue(value7);
+                        setManagedAndVisableTrue(value8);
 
                         setLabelManagedAndVisableFalse(label0);
                         setLabelManagedAndVisableTrue(label1);
@@ -119,6 +124,7 @@ public class StudentScene extends InputChecks {
                         setLabelManagedAndVisableTrue(label5);
                         setLabelManagedAndVisableTrue(label6);
                         setLabelManagedAndVisableTrue(label7);
+                        setLabelManagedAndVisableTrue(label8);
                     }
                     if (s.equals("Delete") || s.equals("Read")) {
                         setManagedAndVisableFalse(value0);
@@ -129,6 +135,7 @@ public class StudentScene extends InputChecks {
                         setManagedAndVisableFalse(value5);
                         setManagedAndVisableFalse(value6);
                         setManagedAndVisableFalse(value7);
+                        setManagedAndVisableFalse(value8);
 
                         setLabelManagedAndVisableFalse(label0);
                         setLabelManagedAndVisableTrue(label1);
@@ -138,6 +145,7 @@ public class StudentScene extends InputChecks {
                         setLabelManagedAndVisableFalse(label5);
                         setLabelManagedAndVisableFalse(label6);
                         setLabelManagedAndVisableFalse(label7);
+                        setLabelManagedAndVisableFalse(label8);
                     }
                     if (s.equals("Update")) {
                         setManagedAndVisableTrue(value0);
@@ -148,6 +156,7 @@ public class StudentScene extends InputChecks {
                         setManagedAndVisableTrue(value5);
                         setManagedAndVisableTrue(value6);
                         setManagedAndVisableTrue(value7);
+                        setManagedAndVisableTrue(value8);
 
                         setLabelManagedAndVisableTrue(label0);
                         setLabelManagedAndVisableTrue(label1);
@@ -157,6 +166,7 @@ public class StudentScene extends InputChecks {
                         setLabelManagedAndVisableTrue(label5);
                         setLabelManagedAndVisableTrue(label6);
                         setLabelManagedAndVisableTrue(label7);
+                        setLabelManagedAndVisableTrue(label8);
                     }
                 }
             }
@@ -172,6 +182,7 @@ public class StudentScene extends InputChecks {
             value5.clear();
             value6.clear();
             value7.clear();
+            value8.clear();
             output.clear();
         });
 
@@ -192,6 +203,7 @@ public class StudentScene extends InputChecks {
                     String date = formatDate(value3.getText());
                     boolean checkEmail = checkEmail(value1.getText());
                     boolean checkGender = checkGender(value4.getText());
+                    boolean checkZipCode = checkZipCode(value8.getText());
                     if (date.equals("Incorrect date...")) {
                         output.setText("Incorrect date...");
                     }
@@ -201,10 +213,15 @@ public class StudentScene extends InputChecks {
                     if (checkGender == false) {
                         output.setText("Make sure the gender is written in the following way: M or F.");
                     }
-                    if (!date.equals("Incorrect date...") && checkEmail == true && checkGender == true) {
+                    if (checkZipCode == false) {
+                        output.setText("Make sure the zipcode is written in the following way: 1234 AB");
+                    }
+                    if (!date.equals("Incorrect date...") && checkEmail == true && checkGender == true
+                            && checkZipCode == true) {
                         output.setText(studentData.createStudent(value1.getText(), value2.getText(),
                                 date,
-                                value4.getText(), value5.getText(), value6.getText(), value7.getText()));
+                                value4.getText(), value5.getText(), value6.getText(), value7.getText(),
+                                value8.getText()));
                     }
                 } catch (Exception e) {
                     output.setText("Something went wrong...");
@@ -224,6 +241,7 @@ public class StudentScene extends InputChecks {
                     String date = formatDate(value3.getText());
                     boolean checkEmail = checkEmail(value1.getText());
                     boolean checkGender = checkGender(value4.getText());
+                    boolean checkZipCode = checkZipCode(value8.getText());
                     if (date.equals("Incorrect date...")) {
                         output.setText("Incorrect date...");
                     }
@@ -236,7 +254,8 @@ public class StudentScene extends InputChecks {
                     if (!date.equals("Incorrect date...") && checkEmail == true && checkGender == true) {
                         output.setText(
                                 studentData.updateStudent(value0.getText(), value1.getText(), value2.getText(), date,
-                                        value4.getText(), value5.getText(), value6.getText(), value7.getText()));
+                                        value4.getText(), value5.getText(), value6.getText(), value7.getText(),
+                                        value8.getText()));
                     }
 
                 } catch (Exception e) {
