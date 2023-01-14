@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+.text {
+    -fx-font-family: 'Inter';
+    -fx-font-size: 10pt;
+    -fx-color: #101630;
+}
+
+
+
+
+.button {
+    -fx-font-size: 10pt; 
+    -fx-background-color: #101630; 
+    -fx-text-fill: #ffffff; 
+    -fx-border-color: #101630; 
+    -fx-border-width: 1;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-focus-color: transparent;
+}
+
+.button:hover {
+    transition: -fx-background-color 2s;
+    -fx-background-color: transparent;
+    -fx-text-fill: #101630;
+}
+
+#text-area-style {
+    -fx-border-color: #101630; 
+    -fx-border-width: 1;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-focus-color: transparent;
+}
+
+.radio-button {
+    -fx-focus-color: transparent;
+    -fx-padding: 10;
+}
+
+.radio-button:selected {
+    -fx-mark-color: #101630;
+ }
+ 
