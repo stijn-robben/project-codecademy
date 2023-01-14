@@ -46,4 +46,14 @@ public class InputChecks {
         }
         return false;
     }
+
+    public boolean checkGrade(String grade) {
+        double gradeDouble = Double.valueOf(grade);
+        if (gradeDouble <= 10 && gradeDouble >= 1) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 }

@@ -30,6 +30,11 @@ public class Connection {
                 String result = printSQLResultRegistration(rs);
                 return result;
             }
+            if (table.equals("Certificate")) {
+                ResultSet rs = stmt.executeQuery(query);
+                String result = printSQLResultCertificate(rs);
+                return result;
+            }
         }
         return "The table is not supported.";
     }
@@ -77,6 +82,22 @@ public class Connection {
         }
         if (result.equals("")) {
             return "The specified course name / student email does not appear in the database.";
+        }
+        return result;
+    }
+
+    public static String printSQLResultCertificate(ResultSet rs) throws SQLException {
+        String result = "";
+        while (rs.next()) {
+            String certificateID = rs.getString("CertificateID");
+            String grade = rs.getString("Grade");
+            String nameEmployee = rs.getString("NameEmployee");
+            String courseName = rs.getString("CourseName");
+            result += "ID: " + certificateID + " Grade: " + grade + "  Employee name: " + nameEmployee
+                    + " Course name: " + courseName + ", ";
+        }
+        if (result.equals("")) {
+            return "The specified student email does not have a certificate in the database.";
         }
         return result;
     }
