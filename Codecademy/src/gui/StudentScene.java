@@ -251,7 +251,11 @@ public class StudentScene extends InputChecks {
                     if (checkGender == false) {
                         output.setText("Make sure the gender is written in the following way: M or F.");
                     }
-                    if (!date.equals("Incorrect date...") && checkEmail == true && checkGender == true) {
+                    if (checkZipCode == false) {
+                        output.setText("Make sure the zipcode is written in the following way: 1234 AB");
+                    }
+                    if (!date.equals("Incorrect date...") && checkEmail == true && checkGender == true
+                            && checkZipCode == true) {
                         output.setText(
                                 studentData.updateStudent(value0.getText(), value1.getText(), value2.getText(), date,
                                         value4.getText(), value5.getText(), value6.getText(), value7.getText(),
