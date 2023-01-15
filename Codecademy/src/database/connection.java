@@ -9,6 +9,7 @@ public class Connection {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
     }
 
+    // distribute (if there are result sets) to the right method.
     public String runQuery(String query, boolean returnsResultSet, String table) throws SQLException {
         Statement stmt = DriverManager.getConnection(connectionUrl).createStatement();
         if (!returnsResultSet) {
@@ -33,6 +34,16 @@ public class Connection {
             if (table.equals("Certificate")) {
                 ResultSet rs = stmt.executeQuery(query);
                 String result = printSQLResultCertificate(rs);
+                return result;
+            }
+            if (table.equals("Overview1")) {
+                ResultSet rs = stmt.executeQuery(query);
+                String result = printSQLCount(rs);
+                return result;
+            }
+            if (table.equals("printTop3")) {
+                ResultSet rs = stmt.executeQuery(query);
+                String result = printTop3(rs);
                 return result;
             }
         }
@@ -98,6 +109,31 @@ public class Connection {
         }
         if (result.equals("")) {
             return "The specified student email does not have a certificate in the database.";
+        }
+        return result;
+    }
+
+    public static String printSQLCount(ResultSet rs) throws SQLException {
+        String result = "";
+        while (rs.next()) {
+            String count = rs.getString("Count");
+
+            result += count;
+        }
+        if (result.equals("")) {
+            return "0";
+        }
+        return result;
+    }
+
+    public static String printTop3(ResultSet rs) throws SQLException {
+        String result = "";
+        while (rs.next()) {
+            String top3 = rs.getString("top3");
+            result += top3 + ", ";
+        }
+        if (result.equals("")) {
+            return "0";
         }
         return result;
     }

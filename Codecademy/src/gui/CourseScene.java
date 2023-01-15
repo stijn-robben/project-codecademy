@@ -204,28 +204,4 @@ public class CourseScene extends InputChecks {
         courseScene.getStylesheets().add("/resources/stylesheet.css");
         stage.setScene(courseScene);
     }
-
-    public TextField setManagedAndVisableTrue(TextField value) {
-        value.setManaged(true);
-        value.setVisible(true);
-        return value;
-    }
-
-    public TextField setManagedAndVisableFalse(TextField value) {
-        value.setManaged(false);
-        value.setVisible(false);
-        return value;
-    }
-
-    public Label setLabelManagedAndVisableTrue(Label label) {
-        label.setManaged(true);
-        label.setVisible(true);
-        return label;
-    }
-
-    public Label setLabelManagedAndVisableFalse(Label label) {
-        label.setManaged(false);
-        label.setVisible(false);
-        return label;
-    }
 }
