@@ -11,7 +11,8 @@ public class StartGUI extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         PrimaryScene primaryScene = new PrimaryScene();
-        stage.setTitle("Stijn Robben (2205997), Stefan Dekkers (2198892), Bas Dekker (2159403), Jozef van Dijk ()");
+        stage.setTitle(
+                "Stijn Robben (2205997), Stefan Dekkers (2198892), Bas Dekker (2159403), Jozef van Dijk (2187288)");
         stage.getIcons().add(new Image("/resources/codecademyIcon.jpg"));
         primaryScene.primaryScene(stage);
     }
